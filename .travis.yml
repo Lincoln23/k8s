@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t lincoln23/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true lincoln23/react-test npm test
+
+after_success:
+  - docker build lincoln23/client ./cleint
+  - docker build lincoln23/nginx ./nginx
+  - docker build lincoln23/server ./server
+  - docker build lincoln23/worker ./worker
+  # Log into docker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push to Docker hub
+  - docker push lincoln23/client
+  - docker push lincoln23/nginx
+  - docker push lincoln23/server
+  - docker push lincoln23/worker
