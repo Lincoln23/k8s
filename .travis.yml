@@ -10,10 +10,10 @@ script:
   - docker run -e CI=true lincoln23/react-test npm test
 
 after_success:
-  - docker build lincoln23/client ./cleint
-  - docker build lincoln23/nginx ./nginx
-  - docker build lincoln23/server ./server
-  - docker build lincoln23/worker ./worker
+  - docker build -t lincoln23/client ./client
+  - docker build -t lincoln23/nginx ./nginx
+  - docker build -t lincoln23/server ./server
+  - docker build -t lincoln23/worker ./worker
   # Log into docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Push to Docker hub
