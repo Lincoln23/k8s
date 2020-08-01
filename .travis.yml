@@ -21,3 +21,15 @@ after_success:
   - docker push lincoln23/nginx
   - docker push lincoln23/server
   - docker push lincoln23/worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-2
+  app: docker-react
+  env: DockerReact-env
+  bucket_name: elasticbeanstalk-us-east-2-086087132159
+  bucket_path: docker-react
+  on:
+    branch: master
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
